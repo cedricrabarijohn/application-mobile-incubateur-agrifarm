@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { EngineChoiceScreenProps } from "./EngineChoiceScreenProps";
 import Footer from "../../components/footer/Footer";
@@ -83,6 +83,11 @@ const EngineChoice: React.FC<EngineChoiceScreenProps> = (props) => {
     CHOICE_STYLES.NOT_CHOOSED
   );
 
+  const [disabledContinueButton, setDisabledContinueButton]: [
+    boolean,
+    Function
+  ] = useState(true);
+
   const handleEngineChoice = (engine: string) => {
     if (engine === ENGINES.EMKA || engine === ENGINES.MS) {
       setChoosedEngine(engine);
@@ -103,9 +108,12 @@ const EngineChoice: React.FC<EngineChoiceScreenProps> = (props) => {
     if (choosedEngine === ENGINES.EMKA) {
       setEkmaStyle(CHOICE_STYLES.CHOOSED);
       setMsStyle(CHOICE_STYLES.NOT_CHOOSED);
+      setDisabledContinueButton(false)
     } else if (choosedEngine === ENGINES.MS) {
       setMsStyle(CHOICE_STYLES.CHOOSED);
       setEkmaStyle(CHOICE_STYLES.NOT_CHOOSED);
+      setDisabledContinueButton(false)
+    } else {
     }
   }, [choosedEngine]);
 
@@ -157,7 +165,11 @@ const EngineChoice: React.FC<EngineChoiceScreenProps> = (props) => {
             </Text>
           </View>
         </View>
-        <ContinueButton handleContinue={handleContinue} />
+        {disabledContinueButton ? (
+          <ContinueButton disabled handleContinue={handleContinue} />
+        ) : (
+          <ContinueButton handleContinue={handleContinue} />
+        )}
       </View>
       <Footer />
     </>

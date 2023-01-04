@@ -8,6 +8,7 @@ import EngineChoice from "./src/screens/engine-choice/EngineChoice";
 import EmkaEngine from "./src/screens/engines/emka-engine/EmkaEngine";
 import MsEngine from "./src/screens/engines/ms-engine/MsEngine";
 import NewEntryEmkaEngine from "./src/screens/engines/emka-engine/new-entry/NewEntryEmkaEngine";
+import NewEntryMsEngine from "./src/screens/engines/ms-engine/new-entry/NewEntryMsEngine";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
@@ -41,6 +42,13 @@ export default function App() {
             component={NewEntryEmkaEngine}
             options={{
               title: "Nouvelle saisie | EMKA",
+            }}
+          />
+          <Stack.Screen
+            name="NewEntryMsEngine"
+            component={NewEntryMsEngine}
+            options={{
+              title: "Nouvelle saisie | MS",
             }}
           />
         </Stack.Navigator>

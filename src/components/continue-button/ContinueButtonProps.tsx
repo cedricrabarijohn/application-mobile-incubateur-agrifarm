@@ -1,3 +1,5 @@
 export type ContinueButtonProps = {
-    handleContinue : Function
+    handleContinue : Function,
+    text?: string,
+    disabled?: boolean,
 }

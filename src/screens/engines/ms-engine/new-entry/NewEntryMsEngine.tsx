@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  KeyboardAvoidingView,
-} from "react-native";
+import { StyleSheet, KeyboardAvoidingView } from "react-native";
 import EngineNewEntryForm from "../../../../components/engine/engine-new-entry-form/EngineNewEntryForm";
 import { EngineNewEntryFormProps } from "../../../../components/engine/engine-new-entry-form/EngineNewEntryFormProps";
 
@@ -15,7 +12,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const NewEntryEmkaEngine = () => {
+const NewEntryMsEngine = () => {
   const [incubatorTemperatureValue, setIncubatorTemperatureValue]: [
     any,
     Function
@@ -46,8 +43,8 @@ const NewEntryEmkaEngine = () => {
         error: incubatorError,
         setError: setIncubatorError,
         type: "number",
-        min: 99.5,
-        max: 100.4,
+        min: 37.5,
+        max: 38,
       },
       {
         label: "Humidite",
@@ -56,8 +53,8 @@ const NewEntryEmkaEngine = () => {
         error: humidityError,
         setError: setHumidityError,
         type: "number",
-        min: 82,
-        max: 86,
+        min: 62,
+        max: 66,
       },
       {
         label: "Retournement",
@@ -74,8 +71,8 @@ const NewEntryEmkaEngine = () => {
         error: aerationError,
         setError: setAerationError,
         type: "number",
-        min: 35,
-        max: 90,
+        min: 1,
+        max: 4,
       },
       {
         label: "Temperature de la salle",
@@ -95,4 +92,4 @@ const NewEntryEmkaEngine = () => {
     </KeyboardAvoidingView>
   );
 };
-export default NewEntryEmkaEngine;
+export default NewEntryMsEngine;
