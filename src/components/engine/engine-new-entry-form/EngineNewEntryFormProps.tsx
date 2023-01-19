@@ -11,6 +11,17 @@ export type FieldEngineNewEntryProps = {
   max?: number;
   unite?: string;
 };
+
+export type FieldsEngineNewEntryProps = {
+  [key: string]: FieldEngineNewEntryProps,
+  incubatorTemperature: FieldEngineNewEntryProps,
+  humidity: FieldEngineNewEntryProps,
+  returnment: FieldEngineNewEntryProps,
+  aeration: FieldEngineNewEntryProps,
+  roomTemperature: FieldEngineNewEntryProps
+}
+
 export type EngineNewEntryFormProps = {
-  fields: FieldEngineNewEntryProps[];
+  fields: FieldsEngineNewEntryProps,
+  handleValidate: Function
 };

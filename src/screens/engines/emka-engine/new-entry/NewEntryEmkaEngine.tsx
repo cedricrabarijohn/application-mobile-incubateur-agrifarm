@@ -1,21 +1,17 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  KeyboardAvoidingView,
-} from "react-native";
+import { StyleSheet, KeyboardAvoidingView, ScrollView } from "react-native";
 import EngineNewEntryForm from "../../../../components/engine/engine-new-entry-form/EngineNewEntryForm";
 import { EngineNewEntryFormProps } from "../../../../components/engine/engine-new-entry-form/EngineNewEntryFormProps";
+import { NewEntryEmkaEngineScreenProps } from "./NewEntryEmkaEngineScreenProps";
 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
 
-const NewEntryEmkaEngine = () => {
+const NewEntryEmkaEngine: React.FC<NewEntryEmkaEngineScreenProps> = (props) => {
   const [incubatorTemperatureValue, setIncubatorTemperatureValue]: [
     any,
     Function
@@ -37,9 +33,16 @@ const NewEntryEmkaEngine = () => {
   const [roomTemperatureError, setRoomTemperatureError]: [string, Function] =
     useState("");
 
+  const validateNewEntryEmkaEngine = () => {
+    props.navigation.navigate("EmkaEngine");
+  };
+
   const formDatas: EngineNewEntryFormProps = {
-    fields: [
-      {
+    handleValidate: () => {
+      validateNewEntryEmkaEngine()
+    },
+    fields: {
+      incubatorTemperature: {
         label: "Temperature de l'incubateur",
         value: incubatorTemperatureValue,
         setValue: setIncubatorTemperatureValue,
@@ -49,7 +52,7 @@ const NewEntryEmkaEngine = () => {
         min: 99.5,
         max: 100.4,
       },
-      {
+      humidity: {
         label: "Humidite",
         value: humidityValue,
         setValue: setHumidityValue,
@@ -59,7 +62,7 @@ const NewEntryEmkaEngine = () => {
         min: 82,
         max: 86,
       },
-      {
+      returnment: {
         label: "Retournement",
         value: returnmentValue,
         setValue: setReturnmentValue,
@@ -67,7 +70,7 @@ const NewEntryEmkaEngine = () => {
         setError: setReturnmentError,
         type: "number",
       },
-      {
+      aeration: {
         label: "Aeration",
         value: aerationValue,
         setValue: setAerationValue,
@@ -77,7 +80,7 @@ const NewEntryEmkaEngine = () => {
         min: 35,
         max: 90,
       },
-      {
+      roomTemperature: {
         label: "Temperature de la salle",
         value: roomTemperatureValue,
         setValue: setRoomTemperatureValue,
@@ -87,12 +90,15 @@ const NewEntryEmkaEngine = () => {
         min: 27,
         max: 30,
       },
-    ],
+    },
   };
   return (
-    <KeyboardAvoidingView style={styles.wrapper}>
-      <EngineNewEntryForm fields={[...formDatas.fields]} />
-    </KeyboardAvoidingView>
+    <ScrollView style={styles.wrapper}>
+      <EngineNewEntryForm
+        handleValidate={formDatas.handleValidate}
+        fields={{ ...formDatas.fields }}
+      />
+    </ScrollView>
   );
 };
 export default NewEntryEmkaEngine;

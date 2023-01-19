@@ -26,6 +26,7 @@ const engineDetailsDatasMock: Array<SingleEngineDetailsType> = [
     definition: "Température de la salle",
   },
 ];
+
 const tableHeadersMock: Array<string> = [
   "id",
   "T°inc",
@@ -33,12 +34,14 @@ const tableHeadersMock: Array<string> = [
   "/",
   "A°",
   "T°salle",
+  "Date"
 ];
-const tableRowsMock: Array<EngineDataTableRowType> = [
-  {
+const tableRowsMock: Array<EngineDataTableRowType> = [];
+for (let i = 1; i <= 10; i++) {
+  tableRowsMock.push({
     columns: [
       {
-        value: "1",
+        value: i,
       },
       {
         value: "28",
@@ -58,284 +61,12 @@ const tableRowsMock: Array<EngineDataTableRowType> = [
         value: "27",
         suffix: "°C",
       },
+      {
+        value:""
+      }
     ],
-  },
-  {
-    columns: [
-      {
-        value: "1",
-      },
-      {
-        value: "28",
-        suffix: "°F",
-      },
-      {
-        value: "26",
-      },
-      {
-        value: "1",
-      },
-      {
-        value: "82",
-        suffix: "%",
-      },
-      {
-        value: "27",
-        suffix: "°C",
-      },
-    ],
-  },
-  {
-    columns: [
-      {
-        value: "1",
-      },
-      {
-        value: "28",
-        suffix: "°F",
-      },
-      {
-        value: "26",
-      },
-      {
-        value: "1",
-      },
-      {
-        value: "82",
-        suffix: "%",
-      },
-      {
-        value: "27",
-        suffix: "°C",
-      },
-    ],
-  },
-  {
-    columns: [
-      {
-        value: "1",
-      },
-      {
-        value: "28",
-        suffix: "°F",
-      },
-      {
-        value: "26",
-      },
-      {
-        value: "1",
-      },
-      {
-        value: "82",
-        suffix: "%",
-      },
-      {
-        value: "27",
-        suffix: "°C",
-      },
-    ],
-  },
-  {
-    columns: [
-      {
-        value: "1",
-      },
-      {
-        value: "28",
-        suffix: "°F",
-      },
-      {
-        value: "26",
-      },
-      {
-        value: "1",
-      },
-      {
-        value: "82",
-        suffix: "%",
-      },
-      {
-        value: "27",
-        suffix: "°C",
-      },
-    ],
-  },
-  {
-    columns: [
-      {
-        value: "1",
-      },
-      {
-        value: "28",
-        suffix: "°F",
-      },
-      {
-        value: "26",
-      },
-      {
-        value: "1",
-      },
-      {
-        value: "82",
-        suffix: "%",
-      },
-      {
-        value: "27",
-        suffix: "°C",
-      },
-    ],
-  },
-  {
-    columns: [
-      {
-        value: "1",
-      },
-      {
-        value: "28",
-        suffix: "°F",
-      },
-      {
-        value: "26",
-      },
-      {
-        value: "1",
-      },
-      {
-        value: "82",
-        suffix: "%",
-      },
-      {
-        value: "27",
-        suffix: "°C",
-      },
-    ],
-  },
-  {
-    columns: [
-      {
-        value: "1",
-      },
-      {
-        value: "28",
-        suffix: "°F",
-      },
-      {
-        value: "26",
-      },
-      {
-        value: "1",
-      },
-      {
-        value: "82",
-        suffix: "%",
-      },
-      {
-        value: "27",
-        suffix: "°C",
-      },
-    ],
-  },
-  {
-    columns: [
-      {
-        value: "1",
-      },
-      {
-        value: "28",
-        suffix: "°F",
-      },
-      {
-        value: "26",
-      },
-      {
-        value: "1",
-      },
-      {
-        value: "82",
-        suffix: "%",
-      },
-      {
-        value: "27",
-        suffix: "°C",
-      },
-    ],
-  },
-  {
-    columns: [
-      {
-        value: "1",
-      },
-      {
-        value: "28",
-        suffix: "°F",
-      },
-      {
-        value: "26",
-      },
-      {
-        value: "1",
-      },
-      {
-        value: "82",
-        suffix: "%",
-      },
-      {
-        value: "27",
-        suffix: "°C",
-      },
-    ],
-  },
-  {
-    columns: [
-      {
-        value: "1",
-      },
-      {
-        value: "28",
-        suffix: "°F",
-      },
-      {
-        value: "26",
-      },
-      {
-        value: "1",
-      },
-      {
-        value: "82",
-        suffix: "%",
-      },
-      {
-        value: "27",
-        suffix: "°C",
-      },
-    ],
-  },
-  {
-    columns: [
-      {
-        value: "1",
-      },
-      {
-        value: "28",
-        suffix: "°F",
-      },
-      {
-        value: "26",
-      },
-      {
-        value: "1",
-      },
-      {
-        value: "82",
-        suffix: "%",
-      },
-      {
-        value: "27",
-        suffix: "°C",
-      },
-    ],
-  },
-];
+  });
+}
 export const engineDatasMock = {
   engineDetailsDatasMock: engineDetailsDatasMock,
   tableHeadersMock: tableHeadersMock,

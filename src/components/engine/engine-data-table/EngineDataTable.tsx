@@ -1,10 +1,18 @@
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { Text, StyleSheet, ScrollView } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  ScrollView,
+  View,
+  Modal,
+  Pressable,
+} from "react-native";
 import { grey, light_grey } from "../../../colors/Colors";
 import { EngineDataTableType } from "./EngineDataTableType";
 import EngineDataTableRow from "./row/EngineDataTableRow";
 import EngineDataTableHeader from "./header/EngineDataTableHeader";
 import { DataTable } from "react-native-paper";
+import { useState } from "react";
 
 const styles = StyleSheet.create({
   grid: {
@@ -13,61 +21,69 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   scrollView: {
-    height: 250
-  }
+    height: 250,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
 });
 
 const EngineDataTable: React.FC<EngineDataTableType> = (props) => {
   return (
-    <Grid style={[styles.grid, { ...props.style }]}>
-      <Row>{props && <EngineDataTableHeader headers={props.headers} />}</Row>
-      <ScrollView style={styles.scrollView}>
-        {props &&
-          props.rows.map((row, key) => {
-            return <EngineDataTableRow key={key} columns={row.columns} />;
-          })}
-      </ScrollView>
-      {/* <Row>
-        <Col>
-          <Text>id</Text>
-        </Col>
-        <Col>
-          <Text>T°inc</Text>
-        </Col>
-        <Col>
-          <Text>H°</Text>
-        </Col>
-        <Col>
-          <Text>/</Text>
-        </Col>
-        <Col>
-          <Text>A°</Text>
-        </Col>
-        <Col>
-          <Text>T°salle</Text>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Text>1</Text>
-        </Col>
-        <Col>
-          <Text>99,5 °F</Text>
-        </Col>
-        <Col>
-          <Text>86</Text>
-        </Col>
-        <Col>
-          <Text>2</Text>
-        </Col>
-        <Col>
-          <Text>90 %</Text>
-        </Col>
-        <Col>
-          <Text>28 °C</Text>
-        </Col>
-      </Row> */}
-    </Grid>
+    <>
+      <Grid style={[styles.grid, { ...props.style }]}>
+        <Row>{props && <EngineDataTableHeader headers={props.headers} />}</Row>
+        <ScrollView style={styles.scrollView}>
+          {props &&
+            props.rows.map((row, key) => {
+              return (
+                <EngineDataTableRow
+                  key={key}
+                  columns={row.columns}
+                />
+              );
+            })}
+        </ScrollView>
+      </Grid>
+    </>
   );
 };
 export default EngineDataTable;

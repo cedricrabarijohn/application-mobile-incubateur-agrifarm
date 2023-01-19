@@ -1,18 +1,17 @@
 import { useState } from "react";
-import { StyleSheet, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, KeyboardAvoidingView, ScrollView } from "react-native";
 import EngineNewEntryForm from "../../../../components/engine/engine-new-entry-form/EngineNewEntryForm";
 import { EngineNewEntryFormProps } from "../../../../components/engine/engine-new-entry-form/EngineNewEntryFormProps";
+import { NewEntryMsEngineScreenProps } from "./NewEntryMsEngineScreenProps";
 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
 
-const NewEntryMsEngine = () => {
+const NewEntryMsEngine: React.FC<NewEntryMsEngineScreenProps> = (props) => {
   const [incubatorTemperatureValue, setIncubatorTemperatureValue]: [
     any,
     Function
@@ -34,9 +33,15 @@ const NewEntryMsEngine = () => {
   const [roomTemperatureError, setRoomTemperatureError]: [string, Function] =
     useState("");
 
+  const validateNewEntryMsEngine = () => {
+    props.navigation.navigate("MsEngine")
+  };
   const formDatas: EngineNewEntryFormProps = {
-    fields: [
-      {
+    handleValidate: () => {
+      validateNewEntryMsEngine()
+    },
+    fields: {
+      incubatorTemperature: {
         label: "Temperature de l'incubateur",
         value: incubatorTemperatureValue,
         setValue: setIncubatorTemperatureValue,
@@ -46,7 +51,7 @@ const NewEntryMsEngine = () => {
         min: 37.5,
         max: 38,
       },
-      {
+      humidity: {
         label: "Humidite",
         value: humidityValue,
         setValue: setHumidityValue,
@@ -56,7 +61,7 @@ const NewEntryMsEngine = () => {
         min: 62,
         max: 66,
       },
-      {
+      returnment: {
         label: "Retournement",
         value: returnmentValue,
         setValue: setReturnmentValue,
@@ -64,7 +69,7 @@ const NewEntryMsEngine = () => {
         setError: setReturnmentError,
         type: "number",
       },
-      {
+      aeration: {
         label: "Aeration",
         value: aerationValue,
         setValue: setAerationValue,
@@ -74,7 +79,7 @@ const NewEntryMsEngine = () => {
         min: 1,
         max: 4,
       },
-      {
+      roomTemperature: {
         label: "Temperature de la salle",
         value: roomTemperatureValue,
         setValue: setRoomTemperatureValue,
@@ -84,12 +89,15 @@ const NewEntryMsEngine = () => {
         min: 27,
         max: 30,
       },
-    ],
+    },
   };
   return (
-    <KeyboardAvoidingView style={styles.wrapper}>
-      <EngineNewEntryForm fields={[...formDatas.fields]} />
-    </KeyboardAvoidingView>
+    <ScrollView style={styles.wrapper}>
+      <EngineNewEntryForm
+        handleValidate={formDatas.handleValidate}
+        fields={{ ...formDatas.fields }}
+      />
+    </ScrollView>
   );
 };
 export default NewEntryMsEngine;
