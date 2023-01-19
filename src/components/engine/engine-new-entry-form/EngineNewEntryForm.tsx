@@ -54,12 +54,12 @@ moment.locale("fr", {
     ),
 });
 const EngineNewEntryForm: React.FC<EngineNewEntryFormProps> = (props) => {
-  const [fields, setFields]: [FieldsEngineNewEntryProps, Function] = useState(
-    props.fields
-  );
+  const [fields, setFields]: [FieldsEngineNewEntryProps, Function] = useState({
+    ...props.fields,
+  });
 
   useEffect(() => {
-    setFields(props.fields);
+    setFields({ ...props.fields });
   }, [props]);
 
   const [formIsValid, setFormIsValid]: [boolean, Function] = useState(false);
@@ -86,80 +86,89 @@ const EngineNewEntryForm: React.FC<EngineNewEntryFormProps> = (props) => {
     }, 1000);
     return () => clearInterval(intervalId);
   }, []);
-  const handleValidateField = (
-    text: string,
-    field: FieldEngineNewEntryProps
-  ) => {
-    field.setValue(text);
-    let newError = "";
-    let fieldIsValid = false;
-    if (field.type === "number") {
-      if (!isNumber(text)) {
-        newError = "Un nombre est requis pour ce champ";
-      }
-      const numberAsFloat = parseFloat(text);
-      if (field.min) {
-        if (numberAsFloat < field.min) {
-          newError = `Doit etre superieur à ${field.min}`;
+
+  const ERRORS = {
+    NO_ERROR: "No error",
+  };
+
+  const check_field_if_valid = (field: FieldEngineNewEntryProps, add_error_message: boolean) => {
+    const new_field = field;
+    if (!new_field.value) {
+      if(add_error_message) new_field.error = "Ce champ ne peut pas etre vide."
+      return {
+        is_valid: false,
+        field_error: new_field.error,
+      };
+    } else {
+      new_field.error = "";
+    }
+    if (new_field.type === "number") {
+      const min = new_field.min;
+      const max = new_field.max;
+      if (min !== undefined) {
+        if (parseFloat(new_field.value) < min) {
+          if(add_error_message) new_field.error = `Le champ ne peut pas etre inferieur a ${min}`;
+          return {
+            is_valid: false,
+            field_error: new_field.error,
+          };
+        } else {
+          new_field.error = "";
         }
       }
-      if (field.max) {
-        if (numberAsFloat > field.max) {
-          newError = `Doit etre inferieur à ${field.max}`;
+      if (max !== undefined) {
+        if (parseFloat(new_field.value) > max) {
+          if(add_error_message) new_field.error = `Le champ ne peut pas etre superieur a ${max}`;
+          return {
+            is_valid: false,
+            field_error: new_field.error,
+          };
+        } else {
+          new_field.error = "";
         }
       }
     }
-    fieldIsValid = newError === "" ? true : false;
     return {
-      fieldIsValid: fieldIsValid,
-      error: newError,
+      is_valid: true,
+      field_error: new_field.error,
     };
-  };
-  const validateForm = () => {
-    const incubatorTemperatureObj = fields.incubatorTemperature;
-    const humidityObj = fields.humidity;
-    const returnmentObj = fields.humidity;
-    const aerationObj = fields.aeration;
-    const roomTemperatureObj = fields.roomTemperature;
-
-    let isValid: boolean = handleValidateField(
-      incubatorTemperatureObj.value,
-      incubatorTemperatureObj
-    ).fieldIsValid;
-    isValid = handleValidateField(humidityObj.value, humidityObj).fieldIsValid;
-    isValid = handleValidateField(
-      returnmentObj.value,
-      returnmentObj
-    ).fieldIsValid;
-    isValid = handleValidateField(aerationObj.value, aerationObj).fieldIsValid;
-    isValid = handleValidateField(
-      roomTemperatureObj.value,
-      roomTemperatureObj
-    ).fieldIsValid;
-    setFormIsValid(isValid);
   };
 
   type TYPE = "string" | "number";
-  const handleChange = (text: string, field: FieldEngineNewEntryProps) => {
-    const validationResults = handleValidateField(text, field);
-    field.setError(validationResults.error);
+  const handleChange = (text: string, field_key: string) => {
+    let updatedFields = { ...fields };
+    updatedFields[field_key].value = text;
+    setFormIsValid(validate_form())
+    setFields(updatedFields);
+    const { field_error, is_valid } = check_field_if_valid(
+      updatedFields[field_key],
+      true
+    );
+    updatedFields[field_key].error = field_error;
   };
-
   const check_if_valid = (error: string, value: any) => {
     return error === "" && value;
   };
+  const validate_form = () => {
+    let form_is_valid: boolean = true;
+    Object.keys(fields).map((element_key) => {
+      const field = fields[element_key];
+      const { is_valid } = check_field_if_valid(field, false);
+      if (form_is_valid === true) {
+        form_is_valid = is_valid;
+      }
+    });
+    return form_is_valid;
+  };
+
   useEffect(() => {
-    validateForm();
-  }, [fields]);
+    setFormIsValid(validate_form())
+  }, []);
 
   const handleContinue = () => {
-    console.log(
-      `Temperature de l'incubateur : ${fields.incubatorTemperature.value}`
-    );
-    console.log(`Humidite : ${fields.humidity.value}`);
-    console.log(`Retournement : ${fields.returnment.value}`);
-    console.log(`Aeration : ${fields.aeration.value}`);
-    console.log(`Temperature de la salle : ${fields.roomTemperature.value}`);
+    if (props.handleValidate) {
+      props.handleValidate(fields);
+    }
   };
 
   return (
@@ -230,7 +239,7 @@ const EngineNewEntryForm: React.FC<EngineNewEntryFormProps> = (props) => {
                   </Text>
                   <TextInput
                     keyboardType="numeric"
-                    value={`${fields[element].value}`}
+                    value={fields[element].value}
                     style={[
                       styles.inputInput,
                       fields[element].error !== "" && {
@@ -245,13 +254,19 @@ const EngineNewEntryForm: React.FC<EngineNewEntryFormProps> = (props) => {
                         // color:"green"
                       },
                     ]}
-                    onChangeText={(text) => handleChange(text, fields[element])}
+                    onChangeText={(text) => {
+                      handleChange(text, element);
+                    }}
                   />
-                  {fields[element].error && (
-                    <Text style={{ color: "red" }}>
-                      {fields[element].error}
-                    </Text>
-                  )}
+                  {fields[element].error &&
+                    !check_if_valid(
+                      fields[element].error,
+                      fields[element].value
+                    ) && (
+                      <Text style={{ color: "red" }}>
+                        {fields[element].error}
+                      </Text>
+                    )}
                 </View>
               );
             }

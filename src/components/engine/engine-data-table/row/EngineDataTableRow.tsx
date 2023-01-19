@@ -56,23 +56,6 @@ const styles = StyleSheet.create({
 const EngineDataTableRow = (props: EngineDataTableRowType) => {
   const [modal_visible, set_modal_visible]: [boolean, Function] =
     useState(false);
-    const [incubatorError, setIncubatorError]: [string, Function] = useState("");
-
-    const [humidityValue, setHumidityValue]: [any, Function] = useState("");
-    const [humidityError, setHumidityError]: [string, Function] = useState("");
-  
-    const [returnmentValue, setReturnmentValue]: [any, Function] = useState("");
-    const [returnmentError, setReturnmentError]: [string, Function] =
-      useState("");
-  
-    const [aerationValue, setAerationValue]: [any, Function] = useState("");
-    const [aerationError, setAerationError]: [string, Function] = useState("");
-  
-    const [roomTemperatureValue, setRoomTemperatureValue]: [any, Function] =
-      useState("");
-    const [roomTemperatureError, setRoomTemperatureError]: [string, Function] =
-      useState("");
-  
   return (
     <Row
       onPress={() => {
@@ -81,6 +64,17 @@ const EngineDataTableRow = (props: EngineDataTableRowType) => {
       }}
     >
       <>
+        {props &&
+          props.columns.map((column, key) => {
+            return (
+              <EngineDataTableCol
+                key={key}
+                value={column.value}
+                suffix={column.suffix}
+              />
+            );
+          })}
+
         <Modal
           animationType="slide"
           transparent={true}
@@ -92,7 +86,51 @@ const EngineDataTableRow = (props: EngineDataTableRowType) => {
               <Text style={styles.modalText}>
                 Settings entry {props.columns[0].value}
               </Text>
-              
+              <EngineNewEntryForm
+                handleValidate={() => {}}
+                fields={{
+                  ...{
+                    incubatorTemperature: {
+                      label: "Temperature de l'incubateur",
+                      type: "number",
+                      min: 99.5,
+                      max: 100.4,
+                      value: "",
+                      error: "",
+                    },
+                    humidity: {
+                      label: "Humidite",
+                      type: "number",
+                      min: 82,
+                      max: 86,
+                      value: "",
+                      error: "",
+                    },
+                    returnment: {
+                      label: "Retournement",
+                      type: "number",
+                      value: "",
+                      error: "",
+                    },
+                    aeration: {
+                      label: "Aeration",
+                      type: "number",
+                      min: 35,
+                      max: 90,
+                      value: "",
+                      error: "",
+                    },
+                    roomTemperature: {
+                      label: "Temperature de la salle",
+                      type: "number",
+                      min: 27,
+                      max: 30,
+                      value: "",
+                      error: "",
+                    },
+                  },
+                }}
+              />
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => {
@@ -104,16 +142,6 @@ const EngineDataTableRow = (props: EngineDataTableRowType) => {
             </View>
           </View>
         </Modal>
-        {props &&
-          props.columns.map((column, key) => {
-            return (
-              <EngineDataTableCol
-                key={key}
-                value={column.value}
-                suffix={column.suffix}
-              />
-            );
-          })}
       </>
     </Row>
   );

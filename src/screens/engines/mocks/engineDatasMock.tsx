@@ -22,7 +22,7 @@ const engineDetailsDatasMock: Array<SingleEngineDetailsType> = [
     definition: "Aération",
   },
   {
-    notation: "T°salle",
+    notation: "T°s",
     definition: "Température de la salle",
   },
 ];
@@ -33,8 +33,9 @@ const tableHeadersMock: Array<string> = [
   "H°",
   "/",
   "A°",
-  "T°salle",
-  "Date"
+  "T°s",
+  "Date",
+  "Heure"
 ];
 const tableRowsMock: Array<EngineDataTableRowType> = [];
 for (let i = 1; i <= 10; i++) {
@@ -62,7 +63,10 @@ for (let i = 1; i <= 10; i++) {
         suffix: "°C",
       },
       {
-        value:""
+        value:`2023-01-19`
+      },
+      {
+        value:`06:27:16`
       }
     ],
   });

@@ -2,11 +2,9 @@ type TYPE = "string" | "number";
 
 export type FieldEngineNewEntryProps = {
   label: string;
-  value: any;
-  setValue: Function;
   type: TYPE;
-  error: string;
-  setError: Function;
+  value: any;
+  error: any;
   min?: number;
   max?: number;
   unite?: string;

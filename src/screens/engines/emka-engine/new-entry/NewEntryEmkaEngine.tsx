@@ -33,62 +33,53 @@ const NewEntryEmkaEngine: React.FC<NewEntryEmkaEngineScreenProps> = (props) => {
   const [roomTemperatureError, setRoomTemperatureError]: [string, Function] =
     useState("");
 
-  const validateNewEntryEmkaEngine = () => {
-    props.navigation.navigate("EmkaEngine");
+  const validateNewEntryEmkaEngine = (e:any) => {
+    console.log(e)
+    // props.navigation.navigate("EmkaEngine");
   };
 
   const formDatas: EngineNewEntryFormProps = {
-    handleValidate: () => {
-      validateNewEntryEmkaEngine()
+    handleValidate: (e:any) => {
+      validateNewEntryEmkaEngine(e)
     },
     fields: {
       incubatorTemperature: {
         label: "Temperature de l'incubateur",
-        value: incubatorTemperatureValue,
-        setValue: setIncubatorTemperatureValue,
-        error: incubatorError,
-        setError: setIncubatorError,
         type: "number",
         min: 99.5,
         max: 100.4,
+        value: '',
+        error:''
       },
       humidity: {
         label: "Humidite",
-        value: humidityValue,
-        setValue: setHumidityValue,
-        error: humidityError,
-        setError: setHumidityError,
         type: "number",
         min: 82,
         max: 86,
+        value: '',
+        error:''
       },
       returnment: {
         label: "Retournement",
-        value: returnmentValue,
-        setValue: setReturnmentValue,
-        error: returnmentError,
-        setError: setReturnmentError,
         type: "number",
+        value: '',
+        error:''
       },
       aeration: {
         label: "Aeration",
-        value: aerationValue,
-        setValue: setAerationValue,
-        error: aerationError,
-        setError: setAerationError,
         type: "number",
         min: 35,
         max: 90,
+        value: '',
+        error:''
       },
       roomTemperature: {
         label: "Temperature de la salle",
-        value: roomTemperatureValue,
-        setValue: setRoomTemperatureValue,
-        error: roomTemperatureError,
-        setError: setRoomTemperatureError,
         type: "number",
         min: 27,
         max: 30,
+        value: '',
+        error:''
       },
     },
   };
